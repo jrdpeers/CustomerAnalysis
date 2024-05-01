@@ -3,19 +3,20 @@ import pytest
 from analyze_user_data import process_data, find_max_user_city
 
 def test_process_data():
-    # Create a sample DataFrame
+    # Create a sample DataFrame with multiple entries per user type and city
     data = pd.DataFrame({
-        'Location': ['City A', 'City A', 'City B', 'City B'],
-        'User Type': ['New user', 'Returning user', 'New user', 'Power user'],
-        'Count': [1, 2, 1, 1]
+        'Location': ['City A', 'City A', 'City B', 'City B', 'City A'],
+        'User Type': ['New user', 'Returning user', 'New user', 'Power user', 'Returning user']
     })
+    # Mimic the original function setup
     result = process_data(data)
+    # Validate total users calculation
     assert result.loc['City A', 'New user'] == 1
-    assert result.loc['City A', 'Returning user'] == 2
+    assert result.loc['City A', 'Returning user'] == 2  # Expecting 2 here because 'Returning user' appears twice for 'City A'
     assert result.loc['City B', 'New user'] == 1
     assert result.loc['City B', 'Power user'] == 1
     assert 'Total Users' in result.columns
-    assert result.loc['City A', 'Total Users'] == 3
+    assert result.loc['City A', 'Total Users'] == 3  # Total should reflect the sum across user types
     assert result.loc['City B', 'Total Users'] == 2
 
 def test_find_max_user_city():
