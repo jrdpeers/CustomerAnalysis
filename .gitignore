@@ -122,3 +122,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+user_survey_data_obfuscated.csv
+user_survey_data.csv
+user_types_per_city_with_totals.csv
+user_types_per_city.csv
